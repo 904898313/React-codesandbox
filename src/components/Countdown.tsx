@@ -1,34 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Countdown: React.FC = () => {
   const [count, setCount] = useState<number>(5);
-  const timerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    timerRef.current = setInterval(() => {
+    let timer = count > 0 && setInterval(() => {
       setCount((count) => count - 1);
-      if (count <= 1) {
-        clearInterval(timerRef.current!);
-      }
     }, 1000);
     return () => {
-      clearInterval(timerRef.current!);
+      if(typeof timer == 'number') clearInterval(timer);
     };
   }, [count]);
 
   const reset = () => {
-    clearInterval(timerRef.current!);
-    setCount(5);
+    setCount(5)
   };
 
   return (
     <>
       <h1>倒计时</h1>
-      <h2>{count}</h2>
-      <button onClick={reset}>重置</button>
-      <button className="bg-blue-500 text-white font-bold py-2 px-4 rounded">
-        Click Me
-      </button>
+      <h2>{count ? count : '时间到'}</h2>
+      <button onClick={reset} className="w-20 h-10 bg-lime-500 rounded-md border-orange-600 text-red-900 font">重置</button>
     </>
   );
 };

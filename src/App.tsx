@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Countdown from "./components/Countdown";
 import Todo from "./components/Todo/Todo";
-import "./App.css";
 import "./index.css";
 
 function App() {
