@@ -6,7 +6,6 @@
 #### 温馨提示使用vscode插件方便开发
 1. Tailwind CSS IntelliSense : Tailwind类名提示
 2. Tailwind Fold : 类名隐藏
-3. Tailwind Documentation : Tailwind 在线文档查看
 ...
 
 This is a [Vite](https://vitejs.dev) project together with React.
