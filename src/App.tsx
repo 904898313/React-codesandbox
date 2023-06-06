@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Countdown from "./components/Countdown";
+import UseState from "./components/useState";
 import Todo from "./components/Todo/Todo";
 import "./index.css";
 
@@ -14,6 +15,7 @@ function App() {
       </button>
       <Countdown />
       <Todo />
+      <UseState />
     </div>
   );
 }
