@@ -18,7 +18,7 @@ const UseState = () => {
       <h1>useState array update</h1>
       <ul>
         {
-          arr.map(i => <li>{i}</li>)
+          arr.map(i => <li key={i}>{i}</li>)
         }
       </ul>
       <button onClick={add}>add</button>
