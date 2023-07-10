@@ -6,7 +6,8 @@ interface Ioptions {
 
 const useEcharts = (dom:HTMLDivElement, options:Ioptions) => {
   const echartsInstance = echarts.init(dom);
-  echartsInstance.setOption(options)
+  echartsInstance.setOption(options);
+  return echartsInstance
 }
 
 export default useEcharts
