@@ -5,16 +5,16 @@
  * @Description: 布局页面
  * @Date: 2023-07-07 16:35:38
  * @LastEditors: yangchenguang
- * @LastEditTime: 2023-07-07 16:37:29
+ * @LastEditTime: 2023-07-11 19:14:22
  */
 
 import { useState } from 'react'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const navigation = [
-  { name: 'Product', href: '#' },
+  { name: 'Product', href: '/product' },
   { name: 'Features', href: '#' },
   { name: 'Marketplace', href: '#' },
   { name: 'Company', href: '#' },
@@ -22,7 +22,7 @@ const navigation = [
 
 export default function Layout() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+  const navigate = useNavigate();
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50">
@@ -49,7 +49,7 @@ export default function Layout() {
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-sm font-semibold leading-6 text-gray-900">
+              <a key={item.name} href={item.href} onClick={() => navigate(item.href)} className="text-sm font-semibold leading-6 text-gray-900">
                 {item.name}
               </a>
             ))}
@@ -121,7 +121,9 @@ export default function Layout() {
             }}
           />
         </div>
-        <Outlet />
+        <div style={{margin:'0 auto',width: '1200px'}}>
+          <Outlet />
+        </div>
         {/* <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
             <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
