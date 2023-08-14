@@ -1,5 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useContext } from "react";
 import Todos from "./components/Todos";
+import { todoContext } from "../../context/todoContext";
+
 interface Itodos {
   name: string;
   isDone: boolean;
@@ -10,6 +12,8 @@ interface Itodos {
 const Todo = () => {
   const [todos, setTodos] = useState<Itodos[]>([]);
   const [value, setValue] = useState("");
+  const todo = useContext(todoContext);
+  console.log(todo,"todo");
 
   // 添加
   const handlerAdd = useCallback(() => {
@@ -60,7 +64,6 @@ const Todo = () => {
 
   return (
     <>
-      <h1>todolist</h1>
       <input
         value={value}
         onInput={(e) => setValue((e.target as HTMLInputElement).value)}
