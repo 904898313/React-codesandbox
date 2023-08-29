@@ -5,7 +5,7 @@
  * @Description: 
  * @Date: 2023-07-07 15:51:45
  * @LastEditors: yangchenguang
- * @LastEditTime: 2023-08-29 18:27:20
+ * @LastEditTime: 2023-08-29 18:49:48
 -->
 
 # Vite + React
@@ -20,6 +20,7 @@
 
 #### 清单
 0. 项目框架搭建 (封装axios 开发环境代理 react ts wailwindcss)
-1. 完整井字棋游戏
-2. 封装hooks useLocation...
-3. todoList
+1. 系统设置( 主题色 多语言 )
+2. 完整井字棋游戏
+3. 封装hooks useLocation...
+4. todoList
