@@ -1,3 +1,13 @@
+
+
+<!--
+ * @Author: yangchenguang
+ * @Description: 
+ * @Date: 2023-07-07 15:51:45
+ * @LastEditors: yangchenguang
+ * @LastEditTime: 2023-08-29 18:27:20
+-->
+
 # Vite + React
 
 使用 React18框架 + Vite构建 + Tailwindcss样式库 进行开发。
@@ -8,15 +18,8 @@
 2. Tailwind Fold : 类名隐藏
 ...
 
-This is a [Vite](https://vitejs.dev) project together with React.
-
-[![Edit in CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/github/codesandbox/codesandbox-template-vite-react/main)
-
-[Configuration](https://codesandbox.io/docs/projects/learn/setting-up/tasks) has been added to optimize it for [CodeSandbox](https://codesandbox.io/dashboard).
-
-## Resources
-
-- [CodeSandbox — Docs](https://codesandbox.io/docs/projects)
-- [CodeSandbox — Discord](https://discord.gg/Ggarp3pX5H)
-- [Vite — GitHub](https://github.com/vitejs/vite)
-- [Vite — Docs](https://vitejs.dev/guide/)
+#### 清单
+0. 项目框架搭建 (封装axios 开发环境代理 react ts wailwindcss)
+1. 完整井字棋游戏
+2. 封装hooks useLocation...
+3. todoList

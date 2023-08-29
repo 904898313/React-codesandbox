@@ -1,117 +1,28 @@
+import { useNavigate, Outlet } from 'react-router-dom'
 
-
-/*
- * @Author: yangchenguang
- * @Description: 布局页面
- * @Date: 2023-07-07 16:35:38
- * @LastEditors: yangchenguang
- * @LastEditTime: 2023-08-14 10:40:40
- */
-
-import { useState } from 'react'
-import { Dialog } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Outlet, useNavigate } from "react-router-dom";
-
-const navigation = [
-  { name: 'Product', href: '/product' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+const routeList = [
+  {name: '项目', path: '/product'}
 ]
 
 export default function Layout() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className='sticky inset-x-0 top-0 bg-slate-200'>
-        <header className="container mx-auto">
-          <nav className="flex items-center justify-between py-6" aria-label="Global">
-            <div className="flex lg:flex-1">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                {/* <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                /> */}
-                <h1 onClick={() => navigate('/home')}>Home</h1>
-              </a>
-            </div>
-            <div className="flex lg:hidden">
-              <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                onClick={() => setMobileMenuOpen(true)}
-              >
-                <span className="sr-only">Open main menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="hidden lg:flex lg:gap-x-12">
-              {navigation.map((item) => (
-                <a key={item.name} href={item.href} onClick={() => navigate(item.href)} className="text-sm font-semibold leading-6 text-gray-900">
-                  {item.name}
-                </a>
-              ))}
-            </div>
-            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                Log in <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </nav>
-          <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-            <div className="fixed inset-0 z-50" />
-            <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-              <div className="flex items-center justify-between">
-                <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt=""
-                  />
-                </a>
-                <button
-                  type="button"
-                  className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-              </div>
-              <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                  <div className="py-6">
-                    <a
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Log in
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </Dialog.Panel>
-          </Dialog>
-        </header>
-      </div>
-      <div className="container mx-auto flex-1 pt-12">
-        <Outlet />
+    <div className='w-full min-h-screen  flex flex-col'>
+      <header className='flex h-20 justify-center bg-slate-500'>
+        <div className='container h-full flex justify-between items-center p-5'>
+          <div className='cursor-pointer' onClick={() => navigate('/home')}>Home</div>
+          <div className='flex justify-around'>
+            {
+              routeList.map((item) => <p onClick={() => navigate(item.path)} className='cursor-pointer'>{item.name}</p>)
+            }
+          </div>
+          <div>setting</div>
+        </div>
+      </header>
+      <div className='flex-1 flex justify-center bg-orange-200'>
+        <div className='container flex-1'>
+            <Outlet />
+        </div>
       </div>
     </div>
   )

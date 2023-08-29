@@ -335,6 +335,11 @@
   "resolved" "https://registry.npmjs.org/@remix-run/router/-/router-1.7.1.tgz"
   "version" "1.7.1"
 
+"@types/node@^20.5.0", "@types/node@>= 14":
+  "integrity" "sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-20.5.0.tgz"
+  "version" "20.5.0"
+
 "@types/prop-types@*":
   "integrity" "sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w=="
   "resolved" "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"

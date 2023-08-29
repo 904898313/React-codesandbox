@@ -1,4 +1,15 @@
+
+
+/*
+ * @Author: yangchenguang
+ * @Description: 
+ * @Date: 2023-08-29 18:12:23
+ * @LastEditors: yangchenguang
+ * @LastEditTime: 2023-08-29 18:12:26
+ */
+
 import React,{ createContext, useState } from 'react';
+import useLocalStorage from '../hooks/useLocalstorage';
 
 export const todoContext = createContext({})
 
@@ -9,17 +20,23 @@ interface ItodoItem {
 }
 
 interface ItodoAction {
-    todos: ItodoItem[]
+    todos: ItodoItem[],
+    addTodo: (value:ItodoItem) => void
 }
 
-const todoContextProvider = (props:{children: React.ReactNode}) => {
+interface Iprops {
+    children: React.ReactNode
+}
+
+const todoContextProvider = (props:Iprops) => {
+
+    const [todos, setTodos] = useLocalStorage<ItodoItem[]>('todos',[])
 
     const todoAction:ItodoAction = {
-        todos: [{
-            value: 'x',
-            isDone: false,
-            isEdit: false
-        }]
+        todos: todos,
+        addTodo: (todoItem) => {
+            setTodos(v => [...v,todoItem])
+        }
     }
 
     return (
