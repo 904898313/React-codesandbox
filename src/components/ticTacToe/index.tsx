@@ -1,60 +1,153 @@
-
-
 /*
  * @Author: yangchenguang
  * @Description: 井字棋
  * @Date: 2023-08-30 14:46:41
  * @LastEditors: yangchenguang
- * @LastEditTime: 2023-08-30 17:08:57
+ * @LastEditTime: 2023-08-30 18:23:20
  */
 
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback, memo } from "react";
 
-const Square = memo(({piece,index,setPiece}: {piece:string,index:number,setPiece:(index:number) => void}) => {
-    return <div onClick={() => setPiece(index)} className='flex w-[33.33%] aspect-square justify-center items-center border border-indigo-400'>
-        {piece}
-    </div>
-})
+// 棋格
+const Square = memo(
+    ({
+        piece,
+        index,
+        setPiece,
+    }: {
+        piece: string;
+        index: number;
+        setPiece: (index: number) => void;
+    }) => {
+        return (
+            <div
+                onClick={() => setPiece(index)}
+                className="flex w-[33.33%] aspect-square justify-center items-center border border-indigo-400"
+            >
+                {piece}
+            </div>
+        );
+    }
+);
 
+// 棋盘
 const board = () => {
     // 九个棋格的内容
-    const [squareList, SetSquareList] = useState(["","","","","","","","","",])
+    const [squareList, SetSquareList] = useState([
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+    ]);
 
     // 该谁下了 || 默认谁下
-    const [defaultX, setDefaultX] = useState(true)
+    const [defaultX, setDefaultX] = useState(true);
 
-    // 
-    
-    // 点击设置棋子
-    const setPiece = useCallback((index: number) => {
-        // 如果已经有棋子了 || 游戏结束 就不让在下了
-        if(squareList[index] || isOver(squareList)) return ;
-        
-        const copyArr = squareList.slice();
-        copyArr[index] = defaultX ? '❌' : '✔'
-        SetSquareList(copyArr)
-        setDefaultX(e => !e)
-    }, [squareList, defaultX])
+    // 时间回溯
+    const [backInTimeList, setBackInTimeList] = useState<string[][]>([]);
 
-    let str
-    if(isOver(squareList)) {
-        str = `${isOver(squareList)} 胜利了`
-    } 
+    // 点击棋子
+    const setPiece = useCallback(
+        (index: number) => {
+            // 如果已经有棋子了 || 游戏结束 就不让在下了
+            if (squareList[index] || isOver(squareList)) return;
 
-    return <div className='flex'>
-        <div className='flex w-32 h-32 flex-wrap border border-indigo-400'>
-            {
-                squareList.map((item, index) => {
-                    return <Square piece={item} index={index} setPiece={setPiece} key={index}/>
-                })
-            }
+            // 下子
+            const copyArr = squareList.slice();
+            copyArr[index] = defaultX ? "❌" : "✔";
+            SetSquareList(copyArr);
+
+            // 记录时间回溯
+            setBackInTimeList((e) => {
+                const eCopy = e.slice();
+                eCopy.push(copyArr);
+                return eCopy;
+            });
+
+            // 切换落子者
+            setDefaultX((e) => !e);
+        },
+        [squareList, defaultX, backInTimeList]
+    );
+
+    // 实现时间回溯
+    const backInTime = (index: number) => {
+        SetSquareList(backInTimeList[index]);
+        setBackInTimeList((e) => {
+            const copyArr = e.slice(0, index + 1);
+            return copyArr;
+        });
+    };
+
+    let str;
+    if (isOver(squareList)) {
+        str = `${isOver(squareList)} 胜利了`;
+    }
+
+    return (
+        <div className="flex">
+            {/* 棋盘 */}
+            <div className="flex w-32 h-32 flex-wrap border border-indigo-400">
+                {squareList.map((item, index) => {
+                    return (
+                        <Square
+                            piece={item}
+                            index={index}
+                            setPiece={setPiece}
+                            key={index}
+                        />
+                    );
+                })}
+            </div>
+            {/* 时间回溯 */}
+            <BackInTime backInTimeList={backInTimeList} backInTime={backInTime} />
+            {/* 宣布胜利 */}
+            {str && <h1 className="text-green-400 mx-2">{str}</h1>}
         </div>
-        {str && <h1 className='text-green-400 mx-2'>{str}</h1>}
-    </div>
-    
-}
+    );
+};
 
-const isOver = (squareList: string[]):string | boolean => {
+// 时间回溯
+const BackInTime = ({
+    backInTimeList,
+    backInTime,
+}: {
+    backInTimeList: string[][];
+    backInTime: (num: number) => void;
+}) => {
+    return (
+        <>
+            {!!backInTimeList.length && (
+                <div className="mx-2">
+                    <h1 className="text-green-400 text-center">时间回溯</h1>
+                    <ul>
+                        {backInTimeList.map((item, index) => {
+                            return (
+                                <li
+                                    onClick={() => backInTime(index)}
+                                    className="my-1"
+                                    key={index}
+                                >
+                                    <button className="btn btn-active btn-link text-blue-600 min-h-0 h-4">
+                                        go to move #{index + 1}
+                                    </button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            )}
+        </>
+    );
+};
+
+// 判断游戏是否结束
+const isOver = (squareList: string[]): string | boolean => {
     const gameOverCondition = [
         [0, 1, 2],
         [3, 4, 5],
@@ -63,15 +156,19 @@ const isOver = (squareList: string[]):string | boolean => {
         [1, 4, 7],
         [2, 5, 8],
         [0, 4, 8],
-        [2, 4, 6]
-    ]
-    for(let i = 0; i < gameOverCondition.length; i++) {
-        const [a,b,c] = gameOverCondition[i];
-        if(squareList[a] && squareList[a] === squareList[b] && squareList[a] === squareList[c]) {
-            return squareList[a]
+        [2, 4, 6],
+    ];
+    for (let i = 0; i < gameOverCondition.length; i++) {
+        const [a, b, c] = gameOverCondition[i];
+        if (
+            squareList[a] &&
+            squareList[a] === squareList[b] &&
+            squareList[a] === squareList[c]
+        ) {
+            return squareList[a];
         }
     }
-    return false
-}
+    return false;
+};
 
-export default board
+export default board;
