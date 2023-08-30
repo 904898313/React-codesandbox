@@ -1,3 +1,13 @@
+
+
+/*
+ * @Author: yangchenguang
+ * @Description: todoList 代办列表
+ * @Date: 2023-07-07 15:51:45
+ * @LastEditors: yangchenguang
+ * @LastEditTime: 2023-08-30 16:02:03
+ */
+
 import { memo } from "react";
 
 interface Itodos {
@@ -24,7 +34,7 @@ const Li = ({
   return (
     <ul>
       {todos.map((item, index) => (
-        <li key={index}>
+        <li key={index} className="my-2">
           {item.isEdit ? (
             <input
               value={item.name}
@@ -33,15 +43,15 @@ const Li = ({
               }
             />
           ) : (
-            <span className={item.isDone ? "through" : ""}>{item.name}</span>
+            <span className={item.isDone ? "line-through" : ""}>{item.name}</span>
           )}
-          <button onClick={() => handlerEdit(index)} disabled={item.isDone}>
+          <button className="btn btn-success min-h-[20px] h-7 mx-1" onClick={() => handlerEdit(index)} disabled={item.isDone}>
             {item.isEdit ? "save" : "edit"}
           </button>
-          <button onClick={() => handlerDone(index)} disabled={item.isEdit}>
+          <button className="btn btn-warning min-h-[20px] h-7 mx-1" onClick={() => handlerDone(index)} disabled={item.isEdit}>
             {item.isDone ? "setUndone" : "setDone"}
           </button>
-          <button onClick={() => handlerDelete(index)}>delete</button>
+          <button className="btn btn-error min-h-[20px] h-7 mx-1" onClick={() => handlerDelete(index)}>delete</button>
         </li>
       ))}
     </ul>

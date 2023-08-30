@@ -1,3 +1,13 @@
+
+
+/*
+ * @Author: yangchenguang
+ * @Description: 
+ * @Date: 2023-07-07 15:51:45
+ * @LastEditors: yangchenguang
+ * @LastEditTime: 2023-08-30 16:01:28
+ */
+
 import { useCallback, useState, useContext } from "react";
 import Todos from "./components/Todos";
 import { todoContext } from "../../context/todoContext";
@@ -68,7 +78,7 @@ const Todo = () => {
         value={value}
         onInput={(e) => setValue((e.target as HTMLInputElement).value)}
       />
-      <button onClick={handlerAdd}>add</button>
+      <button className="btn btn-success min-h-[20px] h-7 mx-1" onClick={handlerAdd}>add</button>
       <Todos
         todos={todos}
         liChangeHandler={liChangeHandler}

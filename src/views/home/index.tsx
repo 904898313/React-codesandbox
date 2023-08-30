@@ -5,10 +5,13 @@
  * @Description: 首页
  * @Date: 2023-07-07 16:05:55
  * @LastEditors: yangchenguang
- * @LastEditTime: 2023-07-11 19:27:18
+ * @LastEditTime: 2023-08-30 15:32:19
  */
 
+import { useNavigate } from 'react-router-dom'
+
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="mx-auto max-w-2xl py-32">
       <div className="hidden sm:mb-8 sm:flex sm:justify-center">
@@ -30,6 +33,7 @@ export default function Home() {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <a
+            onClick={() => navigate('/product')}
             href="#"
             className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
