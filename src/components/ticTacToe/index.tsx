@@ -3,35 +3,33 @@
  * @Description: 井字棋
  * @Date: 2023-08-30 14:46:41
  * @LastEditors: yangchenguang
- * @LastEditTime: 2023-08-30 18:23:20
+ * @LastEditTime: 2023-08-31 09:10:58
  */
 
 import { useState, useCallback, memo } from "react";
 
 // 棋格
-const Square = memo(
-    ({
-        piece,
-        index,
-        setPiece,
-    }: {
-        piece: string;
-        index: number;
-        setPiece: (index: number) => void;
-    }) => {
-        return (
-            <div
-                onClick={() => setPiece(index)}
-                className="flex w-[33.33%] aspect-square justify-center items-center border border-indigo-400"
-            >
-                {piece}
-            </div>
-        );
-    }
-);
+const Square = ({
+    piece,
+    index,
+    setPiece,
+}: {
+    piece: string;
+    index: number;
+    setPiece: (index: number) => void;
+}) => {
+    return (
+        <div
+            onClick={() => setPiece(index)}
+            className="flex w-[33.33%] aspect-square justify-center items-center border border-indigo-400"
+        >
+            {piece}
+        </div>
+    );
+};
 
 // 棋盘
-const board = () => {
+const board = memo(() => {
     // 九个棋格的内容
     const [squareList, SetSquareList] = useState([
         "",
@@ -49,7 +47,7 @@ const board = () => {
     const [defaultX, setDefaultX] = useState(true);
 
     // 时间回溯
-    const [backInTimeList, setBackInTimeList] = useState<string[][]>([]);
+    const [backInTimeList, setBackInTimeList] = useState<string[][]>([['','','','','','','','','',]]);
 
     // 点击棋子
     const setPiece = useCallback(
@@ -78,10 +76,11 @@ const board = () => {
     // 实现时间回溯
     const backInTime = (index: number) => {
         SetSquareList(backInTimeList[index]);
-        setBackInTimeList((e) => {
-            const copyArr = e.slice(0, index + 1);
-            return copyArr;
-        });
+        const copyArr = backInTimeList.slice(0, index + 1);
+        setBackInTimeList(copyArr);
+        // 设置 下子者
+        console.log(copyArr,"copyArr");
+        setDefaultX(copyArr.length % 2 ? true : false)
     };
 
     let str;
@@ -110,7 +109,7 @@ const board = () => {
             {str && <h1 className="text-green-400 mx-2">{str}</h1>}
         </div>
     );
-};
+});
 
 // 时间回溯
 const BackInTime = ({
@@ -134,7 +133,7 @@ const BackInTime = ({
                                     key={index}
                                 >
                                     <button className="btn btn-active btn-link text-blue-600 min-h-0 h-4">
-                                        go to move #{index + 1}
+                                        {index ? `go to move #${index}` : "go to move beginning"}
                                     </button>
                                 </li>
                             );
